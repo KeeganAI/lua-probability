@@ -11,7 +11,7 @@ Sceglie un premio da un elenco in base alla probabilità assegnata a ciascuno, c
 ## Why?
 
 ### ENG
-Working on a script for a wheel of fortune, and wanting to remove the prize winnings in "hardcoded" I wanted to do everything user-friendly and done in a decent way.
+Working on a script for a luckywheel, and wanting to remove the prize winnings in "hardcoded" I wanted to do everything user-friendly and done in a decent way.
 So, the goal was to let those who have the script choose the probability that a prize will come out rather than another.
 Then I came across a little problem....
 ##
@@ -48,7 +48,7 @@ This is because the range of random numbers for which they will be selected is l
 
 
 ### ITA
-Lavorando ad unno script per una ruota della fortuna, e volendo rimuovere la vincita dei premi in "hardcoded" ho voluto fare tutto user-friendly e fatto in maniera decente.
+Lavorando ad uno script per una ruota della fortuna, e volendo rimuovere la vincita dei premi in "hardcoded" ho voluto fare tutto user-friendly e fatto in maniera decente.
 Quindi, l'obiettivo era di far scegliere a chi ha in mano lo script, la probabilità che esca un premio piuttosto che un altro.
 Successivamente mi sono imbattuto su un problemino....
 ##
