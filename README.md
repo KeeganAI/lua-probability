@@ -2,21 +2,21 @@
 
 ### ENG
 This is "just" a weighted random selection algorithm. 
-Choose a prize from a list based on the probability awarded to each, with higher probability prizes that are more likely to be selected.
+Choose a prize from a list based on the probability awarded to each, the higher the probability of the prize, the more likely it will be chosen.
 
 ### ITA
 E' "semplicemente" un algoritmo di selezione casuale ponderato.
-Sceglie un premio da un elenco in base alla probabilità assegnata a ciascuno, con più probabilità che i premi siano selezionati.
+Scegli un premio da un elenco in base alla probabilità assegnata a ciascuno, più alta è la probabilità del premio, più probabile sarà che verrà scelto.
 
 ## Why?
 
 ### ENG
-Working on a script for a luckywheel, and wanting to remove the prize winnings in "hardcoded" I wanted to do everything user-friendly and done in a decent way.
+Working on a script for a luckywheel, and wanting to remove the prize winnings in "hardcoded", I wanted to do everything user-friendly and done in a decent way.
 So, the goal was to let those who have the script choose the probability that a prize will come out rather than another.
 Then I came across a little problem....
 ##
 If a prize has a probability of 0.2 (20%), it means that, in theory, it will be chosen 20% of the time. 
-Similarly, a prize with a probability of 0.01 (or 1%) will be chosen only 1% of the time.
+Similarly, a prize with a probability of 0.01 (1%) will be chosen only 1% of the time.
 
 (It’s important to note that these are just theoretical odds.)
 
@@ -32,20 +32,20 @@ I preferred to use "statistical normalization".
 
 -- I could have done something simpler? most likely yes!
 
-# Here's what happens in detail:
+# How it works:
 
-The givePrize function generates a random number, roll, between 0 and 1.
-Then iterates through each prize in the Prizes array.
-For each prize, it adds that prize's normalized probability to cumulativeProbability.
-It checks if roll is less than or equal to cumulativeProbability.
-If roll is less than or equal to cumulativeProbability, it means that prize has been chosen. The corresponding give function is called, and the givePrize function is exited.
-If roll is greater than cumulativeProbability, it means that prize has not been chosen. The code moves on to the next prize in the list.
-This process continues until a prize is selected. Because the normalized probabilities sum to 1, 
-a prize is guaranteed to be selected every time givePrize is called, as long as there is at least one prize in the Prizes array.
+**Function "normalizeRawProbabilities"**
+This function takes as input a table of rewards and the total raw probabilities. 
+It checks if the total raw probabilities is zero, in which case it throws an error (because you can't divide by zero and a zero total suggests there are no rewards to give). Otherwise, for each reward, it calculates the normalized probability by dividing the reward's raw probability by the total raw probabilities. 
+This way, the sum of all normalized probabilities will be exactly 1.
 
-The effect of this algorithm is that prizes with higher normalized probabilities are more likely to be chosen than those with lower normalized probabilities. 
-This is because the range of random numbers for which they will be selected is larger.
+**Function "givePrize"**
+This function is responsible for choosing and awarding a reward. 
+It generates a random number between 0 and 1 and then walks through the reward table, summing the normalized probabilities until it reaches a value that is greater or equal to the randomly generated number. At that point, it awards that reward to the player.
 
+The reward selection in givePrize works because the normalized probabilities sum to 1. If the randomly generated number is, say, 0.7, then the code keeps summing probabilities until it exceeds 0.7. 
+Because the probabilities are normalized, the chance of picking a given reward matches its normalized probability. 
+If a reward has a normalized probability of 0.2, then there's a 20% chance the random number will be below 0.2, which corresponds to the chance of that reward being picked.
 
 ### ITA
 Lavorando ad uno script per una ruota della fortuna, e volendo rimuovere la vincita dei premi in "hardcoded" ho voluto fare tutto user-friendly e fatto in maniera decente.
@@ -69,21 +69,23 @@ Ho preferito usare la  "normalizzazione statistica".
 
 -- Avrei potuto fare una cosa più semplice? molto probabilmente si!
 
-# Quindi, per riassumere:
+# Come funziona:
 
-Genera un numero casuale tra 0 e 1.
-Scorre l'elenco dei premi, accumulando la probabilità di ciascuno.
-Se il numero casuale è inferiore o uguale alla probabilità cumulativa, il premio viene selezionato; altrimenti, continua a scorrere nel prossimo premio nell'elenco.
+**Funzione "normalizeRawProbabilities"**
+Questa funzione prende in input una tabella di premi e il totale delle probabilità "raw". Controlla se il totale delle probabilità "raw" è zero, nel qual caso genera un errore (non si può dividere per zero, e un totale a zero risulterà l'assenza di premi da dare). 
+Altrimenti, per ogni premio, calcola la probabilità normalizzata, dividendo la probabilità "raw" del premio per il totale delle probabilità "raw". 
+**In questo modo, la somma di tutte le probabilità normalizzate sarà esattamente 1.**
 
-Questo processo continua fino a quando viene selezionato un premio. 
-Poiché le probabilità normalizzate ammontano a 1, un premio è garantito per essere selezionato ogni volta givePrize è chiamato, 
-fino a quando c'è almeno un premio nella matrice.
+**Funzione "givePrize"**
+Questa funzione è gestisce la scelta e l'assegnazione di un premio. 
+Genera un numero casuale tra 0 e 1 e poi scorre la tabella dei premi, sommando le probabilità normalizzate finché non raggiunge un valore che è maggiore o uguale al numero generato casualmente. 
+In quel momento, assegna quel premio al giocatore.
 
-L'effetto di questo algoritmo è che i premi con più alte probabilità normalizzate sono più probabilità di essere scelti rispetto a quelli con minori probabilità normalizzate. 
-Questo perché l'intervallo di numeri casuali per i quali saranno selezionati è più grande.
-
-Tutto ciò, garantisce che alla fine verrà selezionato un premio, e i premi con una probabilità normalizzata maggiore hanno più possibilità di essere selezionati.
-
+La scelta del premio in givePrize funziona perché le probabilità normalizzate sommano a 1. 
+Se il numero generato casualmente è (per esempio) 0.7, allora la funzione continua a sommare le probabilità, finché non supera 0.7.
+Visto che le probabilità sono normalizzate, la probabilità di scegliere un dato premio corrisponde alla sua probabilità normalizzata.
+Se un premio ha una probabilità normalizzata di 0.2, allora c'è una probabilità del 20% che il numero casuale sia inferiore a 0.2, 
+che corrisponde alla probabilità che quel premio venga scelto.
 
 ## Installation
 
